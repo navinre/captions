@@ -25,6 +25,14 @@ module Capy
       end
     end
 
+    def change_frame_rate(old_rate, new_rate)
+      old_ms_per_frame = (1000 / old_rate.to_f)
+      new_ms_per_frame = (1000 / new_rate.to_f)
+      self.start_time = (self.start_time / old_ms_per_frame) * new_ms_per_frame
+      self.end_time = (self.end_time / old_ms_per_frame) * new_ms_per_frame
+      self.duration = (self.duration / old_ms_per_frame) * new_ms_per_frame
+    end
+
     def add_text(text)
       if self.text.nil?
         self.text = text
