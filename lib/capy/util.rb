@@ -58,11 +58,4 @@ module Capy
       return time
     end
   end
-
-  def self.subtitle_formats
-    Capy.constants.select do |c|
-      c = Capy.const_get(c)
-      c.is_a?(Class) and c.superclass == Capy::Base
-    end
-  end
 end

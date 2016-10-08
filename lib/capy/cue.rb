@@ -1,5 +1,3 @@
-require 'capy/util'
-
 module Capy
   class Cue
     include Util
