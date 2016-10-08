@@ -32,7 +32,21 @@ module Capy
 
       msec += sec * 1000
 
-      return negative_multiplier * msec.round  # to be consistent with tc_to_frames which also rounds
+      return (negative_multiplier * msec.round) # to be consistent with tc_to_frames which also rounds
+    end
+
+    def msec_to_timecode(milliseconds)
+      seconds = milliseconds / 1000
+      msec = milliseconds % 1000
+      secs = seconds % 60
+
+      seconds = seconds / 60
+      mins = seconds % 60
+
+      seconds = seconds / 60
+      hours = seconds % 60
+
+      format("%02d:%02d:%02d.%03d",hours, mins, secs ,msec)
     end
 
     def sanitize(time)
