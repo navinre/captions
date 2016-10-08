@@ -35,6 +35,17 @@ module Capy
       return (negative_multiplier * msec.round) # to be consistent with tc_to_frames which also rounds
     end
 
+    def convert_frame_rate(msec, old_fps, new_fps)
+      old_ms_per_frame = (1000.0 / old_fps)
+      new_ms_per_frame = (1000.0 / new_fps)
+      frames = (msec / old_ms_per_frame).round
+      sec = frames / old_fps
+      frames = frames % old_fps
+      new_frames = sec * new_fps
+      new_frames += frames
+      return (new_frames * new_ms_per_frame).round
+    end
+
     def msec_to_timecode(milliseconds)
       seconds = milliseconds / 1000
       msec = milliseconds % 1000
