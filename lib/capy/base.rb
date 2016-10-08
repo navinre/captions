@@ -1,16 +1,16 @@
 module Capy
   class Base
 
-    def initialize(file, fps=25)
+    include Util
+
+    def initialize(file=nil, fps=25)
       @cue_list = CueList.new(fps)
-      @file = File.new(file, 'r:bom|utf-8')
+      @file = File.new(file, 'r:bom|utf-8') if file
     end
 
     def base_parser
       begin
         yield
-      rescue => e
-        puts e.message
       ensure
         @file.close
       end
@@ -18,16 +18,22 @@ module Capy
 
     def base_dump(file)
       begin
-        yield
-      rescue => e
-        puts e.message
-      ensure
-        file.close
+        File.open(file, 'w') do |file|
+          yield(file)
+        end
       end
     end
 
     def set_frame_rate=(rate)
       @cue_list.frame_rate = rate
+    end
+
+    def cues
+      @cue_list
+    end
+
+    def cues=(cue_list)
+      @cue_list = cue_list
     end
 
     ## Operations performed on subtitles
