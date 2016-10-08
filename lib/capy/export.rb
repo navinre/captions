@@ -6,7 +6,9 @@ module Capy
       next unless obj.is_a?(Class) and (obj.superclass == Capy::Base)
       method_name = "export_to_" + format.to_s.downcase
       define_method(method_name) do |file|
-        cl.dump(file) if cl.respond_to?(:dump)
+        sub_format = obj.new()
+        sub_format.cues = self.cues.dup
+        sub_format.dump(file) if sub_format.respond_to?(:dump)
       end
     end
   end
