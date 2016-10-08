@@ -20,7 +20,7 @@ module Capy
     end
 
     def serialize(fps)
-      ms_per_frame = (fps / 1000.0)
+      ms_per_frame = (1000.0 / fps)
       self.start_time = convert_to_msec(self.start_time, ms_per_frame)
       self.end_time = convert_to_msec(self.end_time, ms_per_frame)
       if duration.nil?
@@ -31,11 +31,9 @@ module Capy
     end
 
     def change_frame_rate(old_rate, new_rate)
-      old_ms_per_frame = (1000 / old_rate.to_f)
-      new_ms_per_frame = (1000 / new_rate.to_f)
-      self.start_time = (self.start_time / old_ms_per_frame) * new_ms_per_frame
-      self.end_time = (self.end_time / old_ms_per_frame) * new_ms_per_frame
-      self.duration = (self.duration / old_ms_per_frame) * new_ms_per_frame
+      self.start_time = convert_frame_rate(self.start_time, old_rate, new_rate)
+      self.end_time = convert_frame_rate(self.end_time, old_rate, new_rate)
+      self.duration = convert_frame_rate(self.duration, old_rate, new_rate)
     end
 
     def add_text(text)
