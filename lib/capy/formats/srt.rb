@@ -26,6 +26,21 @@ module Capy
       end
     end
 
+    def dump(file)
+      base_dump(file) do |file|
+        @cue_list.each do |cue|
+          file.write(cue.number)
+          file.write("\n")
+          file.write(msec_to_timecode(cue.start_time).gsub!('.' , ','))
+          file.write(" --> ")
+          file.write(msec_to_timecode(cue.end_time).gsub!('.' , ','))
+          file.write("\n")
+          file.write(cue.text)
+          file.write("\n\n")
+        end
+      end
+    end
+
     def get_time(line)
       data = line.split('-->')
       return format_time(data[0]), format_time(data[1])
