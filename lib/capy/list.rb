@@ -13,6 +13,7 @@ module Capy
     end
 
     def append(cue)
+      cue.serialize
       @list << cue
     end
 
