@@ -6,7 +6,7 @@ module Capy
     TIMECODE_REGEX = /^-?([01]\d|2[0-3]):[0-5]\d:[0-5]\d(:\d{2}|\.\d{3})?$/
 
     # Currently considering frame rate as 25
-    def convert_to_msec(tc, frame_frequency=40)
+    def convert_to_msec(tc, ms_per_frame=40)
       msec = 0
       negative_multiplier = 1
       if tc[0] == '-'
@@ -19,7 +19,7 @@ module Capy
       if tc_split[1]  # msec component exists
         msec = tc_split[1].ljust(3, '0').to_i  # pad with trailing 0s to make it 3 digit
       elsif time_split.length == 4  # FF (frame) component exists
-        msec = time_split[-1].to_i * frame_frequency.to_f
+        msec = time_split[-1].to_i * ms_per_frame.to_f
         time_split.pop  # so that below code can work from last index
       end
 
