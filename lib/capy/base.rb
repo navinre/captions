@@ -28,8 +28,14 @@ module Capy
       @cue_list.frame_rate = rate
     end
 
-    def cues
-      @cue_list
+    def cues(&block)
+      if block_given?
+        base = self.class.new()
+        base.cues = fetch_result(&block)
+        return base
+      else
+        @cue_list
+      end
     end
 
     def cues=(cue_list)
