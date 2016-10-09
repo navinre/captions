@@ -66,6 +66,7 @@ module Capy
           time = convert_to_msec(time)
         end
       end
+      raise InvalidInput, 'Input should be in Milliseconds or Timecode' unless time.is_a? (Fixnum)
       return time
     end
   end
