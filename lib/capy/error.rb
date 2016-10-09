@@ -12,4 +12,7 @@ module Capy
 	class UnknownFile < CapyError
 	end
 
+	class InvalidInput < CapyError
+	end
+
 end
