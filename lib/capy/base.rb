@@ -30,7 +30,7 @@ module Capy
     end
 
     ## Operations performed on subtitles
-    def set_frame_rate=(rate)
+    def set_frame_rate(rate)
       @cue_list.frame_rate = rate
     end
 
@@ -58,7 +58,6 @@ module Capy
         cue.duration += msec
       end
     end
-
 
     def fetch_result(&block)
       if block_given?
