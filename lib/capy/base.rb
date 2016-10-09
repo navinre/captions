@@ -9,6 +9,7 @@ module Capy
     end
 
     def base_parser
+      raise UnknownFile, "No subtitle file specified" if @file.nil?
       begin
         yield
       ensure
@@ -24,6 +25,11 @@ module Capy
       end
     end
 
+    def cues=(cue_list)
+      @cue_list = cue_list
+    end
+
+    ## Operations performed on subtitles
     def set_frame_rate=(rate)
       @cue_list.frame_rate = rate
     end
@@ -38,11 +44,6 @@ module Capy
       end
     end
 
-    def cues=(cue_list)
-      @cue_list = cue_list
-    end
-
-    ## Operations performed on subtitles
     def move_by(diff, &block)
       msec = sanitize(diff)
       fetch_result(&block).each do |cue|

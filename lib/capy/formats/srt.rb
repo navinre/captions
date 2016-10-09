@@ -17,8 +17,7 @@ module Capy
           elsif is_text?(line)
             cue.add_text(line)
           elsif !line.empty?
-            puts "Malformed SRT at line #{count}"
-            break
+            raise MalformedString, "Invalid format at line #{count}"
           end
           count += 1
         end
