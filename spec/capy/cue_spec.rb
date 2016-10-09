@@ -22,7 +22,7 @@ module Capy
 				expect(@cue.duration).not_to be nil
 			end
 
-			it "coverts start time, end time and duration" do
+			it "converts start time, end time and duration" do
 				@cue.serialize(@fps)
 				expect(@cue.start_time).to eq 1000
 				expect(@cue.end_time).to eq 2000
@@ -57,6 +57,24 @@ module Capy
 				expect(@cue.end_time).to eq 20334
 			end
 
+		end
+
+		context "add_text" do
+			before :each do
+				@cue = Cue.new
+				expect(@cue.text).to be nil
+			end
+
+			it "adds text" do
+				@cue.add_text("hello")
+				expect(@cue.text).to eq "hello"
+			end
+
+			it "appends new line if text was already present" do
+				@cue.add_text("hello")
+				@cue.add_text("world")
+				expect(@cue.text.split("\n").count).to eq 2
+			end
 		end
 	end
 end
