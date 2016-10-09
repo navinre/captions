@@ -20,8 +20,8 @@ module Capy
     end
 
     def serialize(fps)
-      raise InvalidSubtitle, "Subtitle should have start time" if self.start_time.empty?
-      raise InvalidSubtitle, "Subtitle shold have end time" if self.end_time.empty?
+      raise InvalidSubtitle, "Subtitle should have start time" if self.start_time.nil?
+      raise InvalidSubtitle, "Subtitle shold have end time" if self.end_time.nil?
 
       ms_per_frame = (1000.0 / fps)
       self.start_time = convert_to_msec(self.start_time, ms_per_frame)
