@@ -13,7 +13,7 @@ module Capy
     end
 
     def append(cue)
-      cue.serialize
+      cue.serialize(@fps)
       @list << cue
     end
 
