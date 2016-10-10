@@ -66,10 +66,9 @@ module Capy
       format("%02d:%02d:%02d.%03d",hours, mins, secs ,msec)
     end
 
-    # Returns milliseconds
-    # Parses time-code and converts it to
-    # milliseconds. If time cannot be converted to
-    # milliseconds, it throws InvalidInput Error
+    # Parses time-code and converts it to milliseconds.
+    # If time cannot be converted to milliseconds,
+    # it throws InvalidInput Error
     def sanitize(time, frame_rate)
       if time.is_a?(String)
         if TIMECODE_REGEX.match(time)
