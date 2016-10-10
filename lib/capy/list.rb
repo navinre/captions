@@ -1,6 +1,5 @@
 module Capy
   class CueList
-    include Enumerable
 
     # Creates a new CueList
     def initialize(frame_rate)
@@ -11,6 +10,12 @@ module Capy
     # Returns frame-rate of the list
     def fps
       @fps
+    end
+
+    # Hide all cues when inspecting CueList
+    # Show only necessary info rather than printing everything
+    def inspect
+      "#<Capy::CueList:#{object_id} @fps=#{fps} @cues=#{@list.count}>"
     end
 
     # Changes the frame rate of CueList
