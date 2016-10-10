@@ -1,5 +1,6 @@
 module Capy
   class CueList
+    include Enumerable
 
     # Creates a new CueList
     def initialize(frame_rate)
