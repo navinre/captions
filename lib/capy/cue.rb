@@ -4,6 +4,8 @@ module Capy
 
     attr_accessor :number, :start_time, :end_time, :duration, :text, :property
 
+    # Creates a new Cue class
+    # Each cue denotes a subtitle.
     def initialize
       self.text = nil
       self.start_time = nil
@@ -13,12 +15,19 @@ module Capy
       self.property = {}
     end
 
+    # Sets the time for the cue. Both start-time and
+    # end-time can be passed together. This just assigns
+    # the value passed.
     def set_time(start_time, end_time, duration = nil)
       self.start_time = start_time
       self.end_time = end_time
       self.duration = duration
     end
 
+    # Serializes the values set for the cue.
+    # Converts start-time, end-time and duration to milliseconds
+    # If duration is not found, it will be calculated based on
+    # start-time and end-time.
     def serialize(fps)
       raise InvalidSubtitle, "Subtitle should have start time" if self.start_time.nil?
       raise InvalidSubtitle, "Subtitle shold have end time" if self.end_time.nil?
@@ -33,12 +42,14 @@ module Capy
       end
     end
 
+    # Changes start-time, end-time and duration based on new frame-rate
     def change_frame_rate(old_rate, new_rate)
       self.start_time = convert_frame_rate(self.start_time, old_rate, new_rate)
       self.end_time = convert_frame_rate(self.end_time, old_rate, new_rate)
       self.duration = convert_frame_rate(self.duration, old_rate, new_rate)
     end
 
+    # Adds text. If text is already found, new-line is appended.
     def add_text(text)
       if self.text.nil?
         self.text = text
