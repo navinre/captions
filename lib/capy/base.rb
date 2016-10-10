@@ -123,6 +123,7 @@ module Capy
       ensure
         @file.close
       end
+      return true
     end
 
     # This is the base method through which all subtitle
@@ -136,6 +137,7 @@ module Capy
           yield(file)
         end
       end
+      return true
     end
 
     # This returns the frame-rate which was used for parsing
