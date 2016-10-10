@@ -1,5 +1,9 @@
 module Capy
 
+  # This module adds support for export of subtitles
+  # from one format to another. Subclasses which
+  # extends Capy::Base needs to `dump` method to
+  # support export to that corresponding format
   module Export
     Capy.constants.each do |format|
       obj = Capy.const_get(format)
@@ -13,6 +17,8 @@ module Capy
     end
   end
 
+  # Including this module after all the sub-classes of
+  # Capy::Base has been defined.
   Capy::Base.send(:include, Export)
 
 end
