@@ -1,11 +1,13 @@
 module Capy
   module Util
 
-    # TC should be HH:MM:SS:FF (frames) or HH:MM:SS.MSC (milliseconds). FF(2 digits) and MSC(3 digits) are optional.
-    # FF is 2 digit only, so limited to 99 fps which should be safe for now.
+    # TC should be HH:MM:SS:FF (frames) or HH:MM:SS.MSC (milliseconds).
+    # FF(2 digits) and MSC(3 digits) are optional.
     TIMECODE_REGEX = /^-?([01]\d|2[0-3]):[0-5]\d:[0-5]\d(:\d{2}|\.\d{3})?$/
 
     # Currently considering frame rate as 25
+    # Converts time-code in HH:MM:SS.MSEC (or) HH:MM:SS:FF
+    # to milliseconds.
     def convert_to_msec(tc, ms_per_frame=40)
       msec = 0
       negative_multiplier = 1
@@ -35,17 +37,21 @@ module Capy
       return (negative_multiplier * msec.round) # to be consistent with tc_to_frames which also rounds
     end
 
+    # Converts milliseconds calculated in one frame-rate to another frame-rate
     def convert_frame_rate(msec, old_fps, new_fps)
       old_ms_per_frame = (1000.0 / old_fps)
       new_ms_per_frame = (1000.0 / new_fps)
-      frames = (msec / old_ms_per_frame).round
+      frames = (msec / old_ms_per_frame).round  # Number of frames in old fps
       sec = frames / old_fps
       frames = frames % old_fps
       new_frames = sec * new_fps
-      new_frames += frames
-      return (new_frames * new_ms_per_frame).round
+      new_frames += frames # Number of frames in new fps
+      return (new_frames * new_ms_per_frame).round  # MSEC in new fps
     end
 
+    # Converts milliseconds to timecode format
+    # Currently returns HH:MM:SS.MSEC
+    # Supports upto 60 hours
     def msec_to_timecode(milliseconds)
       seconds = milliseconds / 1000
       msec = milliseconds % 1000
@@ -60,10 +66,14 @@ module Capy
       format("%02d:%02d:%02d.%03d",hours, mins, secs ,msec)
     end
 
-    def sanitize(time)
+    # Returns milliseconds
+    # Parses time-code and converts it to
+    # milliseconds. If time cannot be converted to
+    # milliseconds, it throws InvalidInput Error
+    def sanitize(time, frame_rate)
       if time.is_a?(String)
         if TIMECODE_REGEX.match(time)
-          time = convert_to_msec(time)
+          time = convert_to_msec(time, frame_rate)
         end
       end
       raise InvalidInput, 'Input should be in Milliseconds or Timecode' unless time.is_a? (Fixnum)
