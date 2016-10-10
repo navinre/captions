@@ -77,7 +77,7 @@ module Capy
     # This changes start-time and end-time of subtiltes by
     # the time passed.
     def move_by(diff, &block)
-      msec = sanitize(diff)
+      msec = sanitize(diff, frame_rate)
       fetch_result(&block).each do |cue|
         cue.start_time += msec
         cue.end_time += msec
@@ -92,7 +92,7 @@ module Capy
     #
     # This increases duration of subtiltes by the time passed.
     def increase_duration_by(diff, &block)
-      msec = sanitize(diff)
+      msec = sanitize(diff, frame_rate)
       fetch_result(&block).each do |cue|
         cue.duration += msec
       end
@@ -136,6 +136,12 @@ module Capy
     # export of one format to another.
     def cues=(cue_list)
       @cue_list = cue_list
+    end
+
+    # This returns the frame-rate which was used for parsing
+    # the subtitles
+    def frame_rate
+      @cue_list.fps
     end
 
     # This accepts a block and returns the result based

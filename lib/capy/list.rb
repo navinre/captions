@@ -8,6 +8,11 @@ module Capy
       @list = []
     end
 
+    # Returns frame-rate of the list
+    def fps
+      @fps
+    end
+
     # Changes the frame rate of CueList
     # This also changes frame rate in already parsed
     # subtitles
