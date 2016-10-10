@@ -9,6 +9,11 @@ module Capy
 			@base = Capy::Base.new(@sample_file, @fps)
 		end
 
+		it "has export module" do
+			modules = Capy::Base.ancestors.select { |c| c.class == Module }
+			expect(modules.include?(Export)).to be true
+		end
+
 		context "creates new object" do
 			it "when file specified" do
 				expect(@base.class).to eq Base
@@ -22,7 +27,6 @@ module Capy
 				expect(c.instance_variable_get("@file")).to be nil
 				expect(c.instance_variable_get("@cue_list")).not_to be nil
 			end
-
 		end
 
 		context "base_parse" do
