@@ -1,0 +1,8 @@
+﻿1
+00:00:01,600 --> 00:00:02,684
+Mr Developer, hi there.
+
+2
+00:00:02,767 --> 00:00:06,021
+You are changing the sample subtitle 
+used for capy test
