@@ -32,13 +32,17 @@ module Capy
       raise InvalidSubtitle, "Subtitle should have start time" if self.start_time.nil?
       raise InvalidSubtitle, "Subtitle shold have end time" if self.end_time.nil?
 
-      ms_per_frame = (1000.0 / fps)
-      self.start_time = convert_to_msec(self.start_time, ms_per_frame)
-      self.end_time = convert_to_msec(self.end_time, ms_per_frame)
-      if duration.nil?
-        self.duration = self.end_time - self.start_time
-      else
-        self.duration = convert_to_msec(self.duration, ms_per_frame)
+      begin
+        ms_per_frame = (1000.0 / fps)
+        self.start_time = convert_to_msec(self.start_time, ms_per_frame)
+        self.end_time = convert_to_msec(self.end_time, ms_per_frame)
+        if duration.nil?
+          self.duration = self.end_time - self.start_time
+        else
+          self.duration = convert_to_msec(self.duration, ms_per_frame)
+        end
+      rescue
+        raise InvalidSubtitle, "Cannot calculate start-time or end-time"
       end
     end
 
