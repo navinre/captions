@@ -28,6 +28,13 @@ module Capy
       @file = File.new(file, 'r:bom|utf-8') if file
     end
 
+    # This overrides the existing cuelist which has been
+    # populated with a new cuelist. This is mainly used in
+    # export of one format to another.
+    def cues=(cue_list)
+      @cue_list = cue_list
+    end
+
     ############## BEGINNING OF OPERATIONS #################
     ## Following Operations can performed on subtitles
 
@@ -129,13 +136,6 @@ module Capy
           yield(file)
         end
       end
-    end
-
-    # This overrides the existing cuelist which has been
-    # populated with a new cuelist. This is mainly used in
-    # export of one format to another.
-    def cues=(cue_list)
-      @cue_list = cue_list
     end
 
     # This returns the frame-rate which was used for parsing

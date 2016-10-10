@@ -6,6 +6,7 @@ module Capy
     before :each do
       @sample_file = 'spec/sample/test.srt'
       @fps = 25
+      @block = lambda { |c| }
       @base = Capy::Base.new(@sample_file, @fps)
     end
 
@@ -31,19 +32,23 @@ module Capy
 
     context "base_parse" do
 
+      before :each do
+        @block = lambda {  }
+      end
+
       it "expects a block" do
-        expect { @base.base_parser }.to raise_error
+        expect { @base.send(:base_parser) }.to raise_error
       end
 
       it "parses file if specified and closes it"  do
-        expect { @base.base_parser {  } }.not_to raise_error
+        expect { @base.send(:base_parser, &@block) }.not_to raise_error
         file = @base.instance_variable_get("@file")
         expect(file.closed?).to be true
       end
 
       it "thows error if file not specified" do
         base = Capy::Base.new()
-        expect { base.base_parser { } }.to raise_error
+        expect { base.send(:base_parser, &@block) }.to raise_error
       end
 
       it "parses file in frame rate specified" do
@@ -59,11 +64,11 @@ module Capy
       end
 
       it "requires block" do
-        expect { @base.base_dump(@sample_dump) }.to raise_error(LocalJumpError)
+        expect { @base.send(:base_dump, @sample_dump) }.to raise_error(LocalJumpError)
       end
 
       it "dumps subtitles to a file" do
-        expect { @base.base_dump(@sample_dump) {  } }.not_to raise_error
+        expect { @base.send(:base_dump, @sample_dump, &@block) }.not_to raise_error
       end
     end
 
@@ -89,13 +94,14 @@ module Capy
       end
 
       it "returns result if a block is passed" do
-        expect { @base.fetch_result {} }.not_to raise_error
-        result = @base.fetch_result { |cue| cue.start_time > 3000 }.count
+        expect { @base.send(:fetch_result, &@block) }.not_to raise_error
+        block = lambda { |cue| cue.start_time > 3000 }
+        result = @base.send(:fetch_result, &@block).count
         expect(result).to eq 0
       end
 
       it "returns whole list if block is not passed" do
-        expect(@base.fetch_result.count).to eq 1
+        expect(@base.send(:fetch_result).count).to eq 1
       end
     end
 

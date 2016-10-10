@@ -36,12 +36,16 @@ module Capy
     end
 
     context "sanitize" do
+      before :all do
+        @fps = 25
+      end
+
       it "returns milliseconds when millisecond is passed" do
-        expect(sanitize(1000)).to eq 1000
+        expect(sanitize(1000, @fps)).to eq 1000
       end
 
       it "returns milliseconds when timecode is passed" do
-        expect(sanitize("00:00:01.000")).to eq 1000
+        expect(sanitize("00:00:01.000", @fps)).to eq 1000
       end
     end
 
