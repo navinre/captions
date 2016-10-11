@@ -1,4 +1,4 @@
-module Capy
+module Captions
   class SRT < Base
 
     def parse

@@ -1,8 +1,8 @@
-# Capy - Subtitle Editor and Converter
+# Captions - Subtitle Editor and Converter
 
-[![Build Status](https://travis-ci.org/navinre/capy.svg?branch=master)](https://travis-ci.org/navinre/capy)
+[![Build Status](https://travis-ci.org/navinre/captions.svg?branch=master)](https://travis-ci.org/navinre/captions)
 
-Capy can read subtitles of various formats, modify them and convert the subtitle to other formats. Currently capy supports `SRT`, `WebVTT` files.
+Captions can read subtitles of various formats, modify them and convert the subtitle to other formats. Currently captions supports `SRT`, `WebVTT` files.
 
 ## Supported Features
 - Read subtitles
@@ -26,16 +26,16 @@ Capy can read subtitles of various formats, modify them and convert the subtitle
 **Read subtitle file:**
 
 ```ruby
-s = Capy::SRT.new('test.srt')
+s = Captions::SRT.new('test.srt')
 s.parse
 
-s = Capy::VTT.new('test.vtt')
+s = Captions::VTT.new('test.vtt')
 s.parse
 ```
 
 **Filter subtitles:**
 
-Once the subtitle file has been parsed. Every subtitle will get **start_time, end_time, duration and text**. All the values are stored in milliseconds. `Capy::InvalidSubtitle` error will be thown if start-time or end-time cannot be found for a subtitle.
+Once the subtitle file has been parsed. Every subtitle will get **start_time, end_time, duration and text**. All the values are stored in milliseconds. `Captions::InvalidSubtitle` error will be thown if start-time or end-time cannot be found for a subtitle.
 
 View all subtitle text:
 ```ruby
@@ -77,7 +77,7 @@ Former command increases duration of all subtitles by 1 second. Later increases 
 All subtitles are parsed based on **25 frames/second** by default. This can be changed by passing frame rate at the time of reading the subtitle file.
 
 ```ruby
-s = Capy::SRT.new('test.srt', 29.97)
+s = Captions::SRT.new('test.srt', 29.97)
 s.parse
 ```
 
@@ -92,7 +92,7 @@ s.set_frame_rate(29.97)
 Subtitles parsed in one format can be converted to other format. Currently export is supported for **SRT** and **WebVTT**. Other formats will be added soon.
 
 ```ruby
-s = Capy::SRT.new('test.srt')
+s = Captions::SRT.new('test.srt')
 s.parse
 s.export_to_vtt('test.vtt')
 ```
@@ -102,12 +102,12 @@ s.export_to_vtt('test.vtt')
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capy'
+gem 'captions'
 ```
 
 Or install it yourself as:
 
-    $ gem install capy
+    $ gem install captions
 
 
 ## Development
@@ -118,7 +118,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/navinre/capy.
+Bug reports and pull requests are welcome on GitHub at https://github.com/navinre/captions.
 
 
 ## License

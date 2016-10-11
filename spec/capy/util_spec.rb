@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Capy
+module Captions
   describe Util do
     include Util
 

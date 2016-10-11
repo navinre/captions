@@ -1,4 +1,4 @@
-module Capy
+module Captions
   class Base
 
     # Adding Util methods so that it can be used by
@@ -7,13 +7,13 @@ module Capy
 
     # Creates new instance of parser
     # Usage:
-    #     p = Capy::Base.new(nil, 25)
+    #     p = Captions::Base.new(nil, 25)
     #
     # This creates new cue-list with no file object
     # associated with it. `parse` method cannot be
     # called if no file path is specified.
     #
-    #    p = Capy::Base.new('file_path', 25)
+    #    p = Captions::Base.new('file_path', 25)
     #
     # This parses the file specified in the file path
     # `parse` method will be defined in any one of the
@@ -45,7 +45,7 @@ module Capy
     # subtitle is parsed, frame rate (fps) can be changed using
     # this method.
     # Usage:
-    #     p = Capy::Base.new('file_path', 25)
+    #     p = Captions::Base.new('file_path', 25)
     #     p.parse
     #     p.set_frame_rate(29.97)
     #

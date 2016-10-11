@@ -1,4 +1,4 @@
-module Capy
+module Captions
 	class VTT < Base
 
     # Header used for all VTT files

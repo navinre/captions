@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe Capy do
+describe Captions do
 	it "has version number" do
-		expect(Capy::VERSION).not_to be nil
+		expect(Captions::VERSION).not_to be nil
 	end
 end

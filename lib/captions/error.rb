@@ -1,27 +1,27 @@
-module Capy
+module Captions
 
-  # Used for all execptions thrown from Capy
-  class CapyError < StandardError
+  # Used for all execptions thrown from captions
+  class CaptionsError < StandardError
   end
 
   # Subtitle has to be in correct format
   # when its being serialized
-  class InvalidSubtitle < CapyError
+  class InvalidSubtitle < CaptionsError
   end
 
   # Subtitle has to be correct format
   # when its being parsed
-  class MalformedString < CapyError
+  class MalformedString < CaptionsError
   end
 
   # File has to be specifed for parsing
   # subtitle
-  class UnknownFile < CapyError
+  class UnknownFile < CaptionsError
   end
 
   # Input has to be proper for filtering
   # subtitles
-  class InvalidInput < CapyError
+  class InvalidInput < CaptionsError
   end
 
 end

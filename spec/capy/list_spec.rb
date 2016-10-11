@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Capy
+module Captions
   describe CueList do
     it "creates cue list" do
       fps = 25
@@ -26,7 +26,7 @@ module Capy
 
       it "will not insert if start time / end time is not set" do
         cue = Cue.new
-        expect { @cue_list.append(cue) }.to raise_error(CapyError)
+        expect { @cue_list.append(cue) }.to raise_error(CaptionsError)
       end
     end
 

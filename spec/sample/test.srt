@@ -4,5 +4,5 @@ Mr Developer, hi there.
 
 2
 00:00:02,767 --> 00:00:06,021
-You are changing the sample subtitle 
-used for capy test
+You are changing the sample subtitle
+used for captions test

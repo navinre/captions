@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'capy/version'
+require 'captions/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "capy"
-  spec.version       = Capy::VERSION
+  spec.name          = "captions"
+  spec.version       = Captions::VERSION
   spec.authors       = ["navin"]
   spec.email         = ["navin@amagi.com"]
 
-  spec.summary       = %q{A Subtitle Editor written in Ruby}
-  spec.description   = %q{ A Subtitle Editor written in Ruby. Capy can read/modify/export any subtitle from one format to another }
-  spec.homepage      = "https://github.com/navinre/capy"
+  spec.summary       = %q{Subtitle Editor and Converter written in Ruby}
+  spec.description   = %q{Subtitle Editor written in Ruby. Captions can read/modify/export subtitles from one format to another }
+  spec.homepage      = "https://github.com/navinre/captions"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

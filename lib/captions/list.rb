@@ -1,4 +1,4 @@
-module Capy
+module Captions
   class CueList
     include Enumerable
 
@@ -16,7 +16,7 @@ module Capy
     # Hide all cues when inspecting CueList
     # Show only necessary info rather than printing everything
     def inspect
-      "#<Capy::CueList:#{object_id} @fps=#{fps} @cues=#{@list.count}>"
+      "#<Captions::CueList:#{object_id} @fps=#{fps} @cues=#{@list.count}>"
     end
 
     # Changes the frame rate of CueList

@@ -1,17 +1,17 @@
 require "spec_helper"
 
-module Capy
+module Captions
   describe Base do
 
     before :each do
       @sample_file = 'spec/sample/test.srt'
       @fps = 25
       @block = lambda { |c| }
-      @base = Capy::Base.new(@sample_file, @fps)
+      @base = Captions::Base.new(@sample_file, @fps)
     end
 
     it "has export module" do
-      modules = Capy::Base.ancestors.select { |c| c.class == Module }
+      modules = Captions::Base.ancestors.select { |c| c.class == Module }
       expect(modules.include?(Export)).to be true
     end
 
@@ -23,7 +23,7 @@ module Capy
       end
 
       it "when file not specified" do
-        c = Capy::Base.new()
+        c = Captions::Base.new()
         expect(c.class).to eq Base
         expect(c.instance_variable_get("@file")).to be nil
         expect(c.instance_variable_get("@cue_list")).not_to be nil
@@ -47,7 +47,7 @@ module Capy
       end
 
       it "thows error if file not specified" do
-        base = Capy::Base.new()
+        base = Captions::Base.new()
         expect { base.send(:base_parser, &@block) }.to raise_error
       end
 
@@ -139,7 +139,7 @@ module Capy
       end
 
       it "thows error on wrong input" do
-        expect { @base.move_by("00:00:00:0000") }.to raise_error(CapyError)
+        expect { @base.move_by("00:00:00:0000") }.to raise_error(CaptionsError)
       end
     end
 
@@ -166,7 +166,7 @@ module Capy
       end
 
       it "thows error on wrong input" do
-        expect { @base.increase_duration_by("00:00:00:0000") }.to raise_error(CapyError)
+        expect { @base.increase_duration_by("00:00:00:0000") }.to raise_error(CaptionsError)
       end
     end
 

@@ -1,4 +1,4 @@
-module Capy
+module Captions
   class Cue
     include Util
 

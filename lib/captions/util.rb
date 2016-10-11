@@ -1,4 +1,4 @@
-module Capy
+module Captions
   module Util
 
     # TC should be HH:MM:SS:FF (frames) or HH:MM:SS.MSC (milliseconds).
