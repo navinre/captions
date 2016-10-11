@@ -23,79 +23,79 @@ Capy can read subtitles of various formats, modify them and convert the subtitle
 
 ## Usage
 
-- **Read subtitle file:**
+**Read subtitle file:**
 
-	```
-	s = Capy::SRT.new('test.srt')
-	s.parse
+```ruby
+s = Capy::SRT.new('test.srt')
+s.parse
 
-	s = Capy::VTT.new('test.vtt')
-	s.parse
-	```
+s = Capy::VTT.new('test.vtt')
+s.parse
+```
 
-- **Filter subtitles:**
+**Filter subtitles:**
 
-	Once the subtitle file has been parsed. Every subtitle will get **start_time, end_time, duration and text**. All the values are stored in milliseconds. `Capy::InvalidSubtitle` error will be thown if start-time or end-time cannot be found for a subtitle.
+Once the subtitle file has been parsed. Every subtitle will get **start_time, end_time, duration and text**. All the values are stored in milliseconds. `Capy::InvalidSubtitle` error will be thown if start-time or end-time cannot be found for a subtitle.
 
-	To get all subtitles:
-		```
-		s.cues.map { |c| c.text }
-		```
+View all subtitle text:
+```ruby
+s.cues.map { |c| c.text }
+```
 
-	Filter subtitles based on condition:
-		```
-		s.cues { |c| c.start_time > 1000 }
-		s.cues { |c| c.end_time > 1000 }
-		s.cues { |c| c.duration > 1000 }
-		```
+Filter subtitles based on condition:
+```ruby
+s.cues { |c| c.start_time > 1000 }
+s.cues { |c| c.end_time > 1000 }
+s.cues { |c| c.duration > 1000 }
+```
 
-	View all subtitle text:
-		```
-		s.cues.map { |c| c.text }
-		```
+To get all subtitles:
+```ruby
+s.cues.each { |c| puts c }
+```
 
-- **Move Subtitle:**
+**Move Subtitle:**
 
-	```
-	s.move_by(1000)
-	s.move_by(1000) { |c| c.start_time > 3000 }
-	```
+```ruby
+s.move_by(1000)
+s.move_by(1000) { |c| c.start_time > 3000 }
+```
 
-	Former command moves all subtitles by 1 second. Later moves the subtitles which are starting after 3 seconds by 1 second.
+Former command moves all subtitles by 1 second. Later moves the subtitles which are starting after 3 seconds by 1 second.
 
-- **Increase Duration:**
+**Increase Duration:**
 
-	```
-	s.increase_duration_by(1000)
-	s.increase_duration_by(1000) { |c| c.start_time > 3000 }
-	```
+```ruby
+s.increase_duration_by(1000)
+s.increase_duration_by(1000) { |c| c.start_time > 3000 }
+```
 
-	Former command increases duration of all subtitles by 1 second. Later increases the duration of subtitles which are starting after 3 seconds by 1 second.
+Former command increases duration of all subtitles by 1 second. Later increases the duration of subtitles which are starting after 3 seconds by 1 second.
 
-- **Change Frame Rate:**
+**Change Frame Rate:**
 
-	All subtitles are parsed based on **25 frames/second** by default. This can be changed by passing frame rate at the time of reading the subtitle file.
+All subtitles are parsed based on **25 frames/second** by default. This can be changed by passing frame rate at the time of reading the subtitle file.
 
-	```
-	s = Capy::SRT.new('test.srt', 29.97)
-	s.parse
-	```
+```ruby
+s = Capy::SRT.new('test.srt', 29.97)
+s.parse
+```
 
-	Frame rate can also be changed after parsing. This command changes all the subtitles which are parsed in different frame-rate to new frame-rate.
+Frame rate can also be changed after parsing. This command changes all the subtitles which are parsed in different frame-rate to new frame-rate.
 
-	```
-	s.set_frame_rate(29.97)
-	```
+```ruby
+s.set_frame_rate(29.97)
+```
 
-- **Convert to Other Format:**
+**Convert to Other Format:**
 
-	Subtitles parsed in one format can be converted to other format. Currently export is supported for **SRT** and **WebVTT**. Other formats will be added soon.
+Subtitles parsed in one format can be converted to other format. Currently export is supported for **SRT** and **WebVTT**. Other formats will be added soon.
 
-	```
-	s = Capy::SRT.new('test.srt')
-	s.parse
-	s.export_to_vtt('test.vtt')
-	```
+```ruby
+s = Capy::SRT.new('test.srt')
+s.parse
+s.export_to_vtt('test.vtt')
+```
 
 ## Installation
 
