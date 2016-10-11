@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["navin@amagi.com"]
 
   spec.summary       = %q{Subtitle Editor and Converter written in Ruby}
-  spec.description   = %q{Subtitle Editor written in Ruby. Captions can read/modify/export subtitles from one format to another }
+  spec.description   = %q{Subtitle Editor and Converter written in Ruby. Captions can read/modify/export subtitles from one format to another }
   spec.homepage      = "https://github.com/navinre/captions"
   spec.license       = "MIT"
 
