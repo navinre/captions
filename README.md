@@ -1,10 +1,101 @@
-# Capy
+# Capy - Subtitle Editor and Converter
 
 [![Build Status](https://travis-ci.org/navinre/capy.svg?branch=master)](https://travis-ci.org/navinre/capy)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capy`. To experiment with that code, run `bin/console` for an interactive prompt.
+Capy can read subtitles of various formats, modify them and convert the subtitle to other formats. Currently capy supports `SRT`, `WebVTT` files.
 
-TODO: Delete this and the text above, and describe your gem
+## Supported Features
+- Read subtitles
+- Move subtitles
+- Increase duration
+- Filter subtitles
+- Change frame rate
+- Convert to other format (SRT, WebVTT)
+
+## Features Planned
+- Read subtitle properties (Font Style, Aligment, Position etc.)
+- Delete subtitles
+- Change subtitle fonts
+- Command Line Interface
+- Spell Check
+- And More...
+
+
+## Usage
+
+- **Read subtitle file:**
+
+	```
+	s = Capy::SRT.new('test.srt')
+	s.parse
+
+	s = Capy::VTT.new('test.vtt')
+	s.parse
+	```
+
+- **Filter subtitles:**
+
+	Once the subtitle file has been parsed. Every subtitle will get **start_time, end_time, duration and text**. All the values are stored in milliseconds. `Capy::InvalidSubtitle` error will be thown if start-time or end-time cannot be found for a subtitle.
+
+	To get all subtitles:
+		```
+		s.cues.map { |c| c.text }
+		```
+
+	Filter subtitles based on condition:
+		```
+		s.cues { |c| c.start_time > 1000 }
+		s.cues { |c| c.end_time > 1000 }
+		s.cues { |c| c.duration > 1000 }
+		```
+
+	View all subtitle text:
+		```
+		s.cues.map { |c| c.text }
+		```
+
+- **Move Subtitle:**
+
+	```
+	s.move_by(1000)
+	s.move_by(1000) { |c| c.start_time > 3000 }
+	```
+
+	Former command moves all subtitles by 1 second. Later moves the subtitles which are starting after 3 seconds by 1 second.
+
+- **Increase Duration:**
+
+	```
+	s.increase_duration_by(1000)
+	s.increase_duration_by(1000) { |c| c.start_time > 3000 }
+	```
+
+	Former command increases duration of all subtitles by 1 second. Later increases the duration of subtitles which are starting after 3 seconds by 1 second.
+
+- **Change Frame Rate:**
+
+	All subtitles are parsed based on **25 frames/second** by default. This can be changed by passing frame rate at the time of reading the subtitle file.
+
+	```
+	s = Capy::SRT.new('test.srt', 29.97)
+	s.parse
+	```
+
+	Frame rate can also be changed after parsing. This command changes all the subtitles which are parsed in different frame-rate to new frame-rate.
+
+	```
+	s.set_frame_rate(29.97)
+	```
+
+- **Convert to Other Format:**
+
+	Subtitles parsed in one format can be converted to other format. Currently export is supported for **SRT** and **WebVTT**. Other formats will be added soon.
+
+	```
+	s = Capy::SRT.new('test.srt')
+	s.parse
+	s.export_to_vtt('test.vtt')
+	```
 
 ## Installation
 
@@ -14,17 +105,10 @@ Add this line to your application's Gemfile:
 gem 'capy'
 ```
 
-And then execute:
-
-    $ bundle
-
 Or install it yourself as:
 
     $ gem install capy
 
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
@@ -34,7 +118,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/capy.
+Bug reports and pull requests are welcome on GitHub at https://github.com/navinre/capy.
 
 
 ## License
