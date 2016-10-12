@@ -51,7 +51,7 @@ module Captions
     # Get start-time and end-time
     def get_time(line)
       data = line.split('-->')
-      return data[0], data[1]
+      return data[0].strip, data[1].strip.split[0]
     end
 
     # Check whether if its subtilte text or not
