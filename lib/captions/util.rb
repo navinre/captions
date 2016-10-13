@@ -6,7 +6,7 @@ module Captions
     TIMECODE_REGEX = /^-?([01]\d|2[0-3]):[0-5]\d:[0-5]\d(:\d{2}|\.\d{3})?$/
 
     # Currently considering frame rate as 25
-    # Converts time-code in HH:MM:SS.MSEC (or) HH:MM:SS:FF
+    # Converts time-code in HH:MM:SS.MSEC (or) HH:MM:SS:FF (or) MM:SS.MSEC
     # to milliseconds.
     def convert_to_msec(tc, ms_per_frame=40)
       msec = 0
@@ -17,6 +17,11 @@ module Captions
       end
       tc_split = tc.split('.')
       time_split = tc_split[0].split(':')
+
+      # To handle MM:SS.MSEC format
+      if time_split.length == 2
+        time_split.unshift('00')
+      end
 
       if tc_split[1]  # msec component exists
         msec = tc_split[1].ljust(3, '0').to_i  # pad with trailing 0s to make it 3 digit
