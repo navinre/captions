@@ -1,0 +1,27 @@
+﻿WEBVTT
+
+NOTE
+This file was written by Captions. I hope
+you enjoy reading it. Some things to
+bear in mind:
+- I was lip-reading, so the cues may
+not be 100% accurate
+- I didn’t pay too close attention to
+when the cues should start or end.
+
+00:00:04.080 --> 00:06.320 align:middle
+I'm going to flip through this deck.
+
+STYLE
+::cue(#\31) { color: lime; }
+::cue(#crédit\ de\ transcription) { color: red; }
+
+00:06.400 --> 00:07.880 align:middle
+And I want you to see one card.
+
+NOTE Comments
+
+00:00:08.300 --> 00:00:09.400 align:middle
+Not this one. That's too obvious.
+
+
