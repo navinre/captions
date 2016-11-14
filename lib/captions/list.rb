@@ -3,9 +3,9 @@ module Captions
     include Enumerable
 
     # Creates a new CueList
-    def initialize(frame_rate)
+    def initialize(frame_rate, list=[])
       @fps = frame_rate
-      @list = []
+      @list = list
     end
 
     # Returns frame-rate of the list
