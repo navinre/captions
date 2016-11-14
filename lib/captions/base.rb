@@ -32,7 +32,7 @@ module Captions
     # populated with a new cuelist. This is mainly used in
     # export of one format to another.
     def cues=(cue_list)
-      @cue_list = cue_list
+      @cue_list = CueList.new(@cue_list.fps, cue_list)
     end
 
     ############## BEGINNING OF OPERATIONS #################
