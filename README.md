@@ -97,6 +97,15 @@ s.parse
 s.export_to_vtt('test.vtt')
 ```
 
+Subtitles can also be filtered and those filtered subtitles can be written to a file.
+
+```ruby
+s = Captions::SRT.new('test.srt')
+s.parse
+new_cues = s.cues { |c| c.start_time > 2000 }
+s.export_to_vtt('test.vtt', new_cues)
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
