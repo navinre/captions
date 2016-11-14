@@ -8,6 +8,7 @@ module Captions
       @fps = 25
       @block = lambda { |c| }
       @base = Captions::Base.new(@sample_file, @fps)
+      @sample_dump = "spec/sample/sample_dump"
     end
 
     it "has export module" do
@@ -167,6 +168,27 @@ module Captions
 
       it "thows error on wrong input" do
         expect { @base.increase_duration_by("00:00:00:0000") }.to raise_error(CaptionsError)
+      end
+    end
+
+    context "filter and export" do
+      before :each do
+        3.times do |i|
+          cue = Cue.new()
+          cue.set_time("00:00:0#{i+1}:00", "00:00:02:00")
+          @base.cues.append(cue)
+        end
+      end
+
+      it "filters part of subtitles" do
+        cues = @base.cues { |c| c.start_time < 2000 }
+        expect(cues.to_a.length).to eq 1
+      end
+
+      it "filters and exports to subtitles" do
+        cues = @base.cues { |c| c.start_time < 2000 }
+        expect(cues.to_a.length).to eq 1
+        expect(@base.export_to_vtt(@sample_dump, cues)).to be true
       end
     end
 
