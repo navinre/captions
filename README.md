@@ -106,6 +106,15 @@ new_cues = s.cues { |c| c.start_time > 2000 }
 s.export_to_vtt('test.vtt', new_cues)
 ```
 
+**Filter subtiltes and Export:**
+
+Subtitles can be filtered with filter option. This returns a new `Captions` object. Once filters new object is created and cues for that becomes the result  of the filter. This can be exported to other formats easily.
+
+```ruby
+new_obj = s.filter { |c| c.start_time > 2000 }
+new_obj.export_to_vtt('test.vtt')
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
