@@ -171,6 +171,27 @@ module Captions
       end
     end
 
+    context "select and export" do
+      before :each do
+        3.times do |i|
+          cue = Cue.new()
+          cue.set_time("00:00:0#{i+1}:00", "00:00:02:00")
+          @base.cues.append(cue)
+        end
+      end
+
+      it "selects part of subtitles" do
+        cues = @base.cues { |c| c.start_time < 2000 }
+        expect(cues.to_a.length).to eq 1
+      end
+
+      it "selects and exports to other format" do
+        cues = @base.cues { |c| c.start_time < 2000 }
+        expect(cues.to_a.length).to eq 1
+        expect(@base.export_to_vtt(@sample_dump, cues)).to be true
+      end
+    end
+
     context "filter and export" do
       before :each do
         3.times do |i|
@@ -180,17 +201,16 @@ module Captions
         end
       end
 
-      it "filters part of subtitles" do
-        cues = @base.cues { |c| c.start_time < 2000 }
-        expect(cues.to_a.length).to eq 1
+      it "returns nil without block" do
+        expect(@base.filter).to be nil
       end
 
-      it "filters and exports to subtitles" do
-        cues = @base.cues { |c| c.start_time < 2000 }
-        expect(cues.to_a.length).to eq 1
-        expect(@base.export_to_vtt(@sample_dump, cues)).to be true
+      it "accepts block and returns new Base object" do
+        old_obj = @base
+        new_obj = @base.filter { |c| c.start_time > 1000 }
+        expect(new_obj.cues.to_a.length).to eq 2
+        expect(new_obj.hash).not_to eq old_obj.hash
       end
     end
-
   end
 end
