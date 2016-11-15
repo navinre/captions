@@ -75,6 +75,23 @@ module Captions
       end
     end
 
+    # This filters the subtitle based on the condition and returns
+    # a new object. A condition is mandatory to filter subtitles
+    # Usage:
+    #     p.filter
+    #     p.filter { |c| c.start_time > 1000 }
+    #     p.filter { |c| c.end_time > 1000 }
+    #     p.filter { |c| c.duration > 1000 }
+    #
+    # Filters and returns a Captions class rather than a cue list
+    def filter(&block)
+      if block_given?
+        base = self.class.new()
+        base.cues = fetch_result(&block)
+        return base
+      end
+    end
+
     # Moves subtitles by `n` milliseconds
     # Usage:
     #     p.move_by(1000)
