@@ -4,13 +4,22 @@ module Captions
     def parse
       base_parser do
         count = 1
-        cue = nil
+        cue = Cue.new
+        number = nil
+        lines = []
         while(line = @file.gets) do
           line = line.strip
-          if is_number?(line)
-            @cue_list.append(cue) if cue
+          if line.empty?
+            @cue_list.append(cue) if cue and cue.start_time
             cue = Cue.new
-            cue.number = line.to_i
+            # This is done to handle white spaces at the beginning
+            # and end of the file
+            if(number = @file.gets)
+              # Reads the number immediately followed by white-space
+              cue.number = number.to_i
+            else
+              cue = nil
+            end
           elsif is_time?(line)
             s , e = get_time(line)
             cue.set_time(s, e)
@@ -21,7 +30,7 @@ module Captions
           end
           count += 1
         end
-        @cue_list.append(cue)
+        @cue_list.append(cue) if cue
       end
     end
 
