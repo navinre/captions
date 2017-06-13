@@ -45,5 +45,29 @@ module Captions
         expect(@cue_list.instance_variable_get('@fps')).to eq new_fps
       end
     end
+
+    context "can respond to" do
+      before :each do
+        @fps = 25
+        @cue_list = CueList.new(@fps)
+        @cue = Cue.new
+        @cue.set_time("00:00:01:00", "00:00:02:00")
+        @cue_list.append(@cue)
+        expect(@cue_list.instance_variable_get('@list').count).to eq 1
+      end
+
+      it "each" do
+        expect(@cue_list.each.class).to eq Enumerator
+      end
+
+      it "array accessor" do
+        expect(@cue_list[0]).to eq @cue
+        expect(@cue_list[-1]).to eq @cue
+      end
+
+      it "sort" do
+        expect { @cue_list.sort }.not_to raise_error
+      end
+    end
   end
 end
