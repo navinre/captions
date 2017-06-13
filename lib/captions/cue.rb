@@ -62,5 +62,8 @@ module Captions
       end
     end
 
+    def <=>(other_cue)
+      self.start_time <=> other_cue.start_time
+    end
   end
 end

@@ -170,9 +170,9 @@ module Captions
     # block is passed, it returns the entire cuelist.
     def fetch_result(&block)
       if block_given?
-        @cue_list.select(&block)
+        return @cue_list.select(&block)
       else
-        @cue_list
+        return @cue_list
       end
     end
   end

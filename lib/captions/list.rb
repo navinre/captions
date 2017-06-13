@@ -13,6 +13,11 @@ module Captions
       @fps
     end
 
+    # Returns the parsed subtitles
+    def entries
+      @list
+    end
+
     # Hide all cues when inspecting CueList
     # Show only necessary info rather than printing everything
     def inspect
@@ -36,7 +41,13 @@ module Captions
 
     # Iterate through CueList
     def each
+      return to_enum(:each) unless block_given?
       @list.each { |c| yield(c) }
+    end
+
+    # Array based enumerables for cuelist
+    def [](index)
+      @list[index]
     end
   end
 end
