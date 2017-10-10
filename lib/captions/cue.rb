@@ -2,6 +2,14 @@ module Captions
   class Cue
     include Util
 
+    # Text Properties supported
+    ALIGNMENT    = "alignment"
+    COLOR        = "color"
+    POSITION     = "position"
+
+    # List of Text Properties
+    TEXT_PROPERTIES = [ALIGNMENT, COLOR, POSITION]
+
     attr_accessor :number, :start_time, :end_time, :duration, :text, :property
 
     # Creates a new Cue class
@@ -22,6 +30,22 @@ module Captions
       self.start_time = start_time
       self.end_time = end_time
       self.duration = duration
+    end
+
+    # Getter and Setter methods for Text Properties
+    # These are pre-defined properties. This is just to assign
+    # or access the property of that text.
+    TEXT_PROPERTIES.each do |setting|
+      define_method :"#{setting}" do
+        if self.property[setting].present?
+          return self.property[setting]
+        end
+        return nil
+      end
+
+      define_method :"#{setting}=" do |value|
+        self.property[setting] = value
+      end
     end
 
     # Serializes the values set for the cue.
