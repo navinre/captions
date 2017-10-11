@@ -46,6 +46,15 @@ module Captions
         ]
         expect(@subs.cues.map{ |c| c.text }).to eq correct_values
       end
+
+      it "parses properties" do
+        correct_values = [
+          {"alignment"=>"start", "position"=>90},
+          {"alignment"=>"middle", "position"=>-1},
+          {"alignment"=>"middle", "position"=>90}
+        ]
+        expect(@subs.cues.map{ |c| c.properties }).to eq correct_values
+      end
     end
   end
 end

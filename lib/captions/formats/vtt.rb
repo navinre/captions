@@ -7,6 +7,18 @@ module Captions
     # VTT file comments/style section
     VTT_METADATA = /^NOTE|^STYLE/
 
+    # Auto Keyword used in Alignment
+    AUTO_KEYWORD = "auto"
+
+    # Alignment Data
+    ALIGNMENT_VALUES = {
+      "middle" => "middle",
+      "left"   => "left",
+      "right"  => "right",
+      "start"  => "start",
+      "end"    => "end",
+    }
+
     # Parse VTT file and update CueList
     def parse
       base_parser do
@@ -28,6 +40,7 @@ module Captions
             cue.number = cue_count
             line = line.split
             cue.set_time(line[0], line[2])
+            set_properties(cue, line[3..-1])
           elsif !meta_data_section and is_text?(line)
             cue.add_text(line)
           end
@@ -71,5 +84,38 @@ module Captions
       !text.empty? and text.is_a?(String) and text != VTT_HEADER
     end
 
+    def set_properties(cue, properties)
+      properties.each do |prop|
+        prop, value = prop.split(":")
+        value.gsub!("%","")
+        case prop
+        when "align"
+          cue.alignment = get_alignment(value)
+        when "line"
+          value = value.split(",")[0]
+          cue.position = get_line(value)
+        end
+      end
+    end
+
+    def get_alignment(value)
+      raise InvalidSubtitle, "Invalid VTT Alignment Property" unless ALIGNMENT_VALUES[value]
+      return ALIGNMENT_VALUES[value]
+    end
+
+    def get_line(value)
+      raise InvalidSubtitle, "VTT Line property should be a valid number" if !is_integer?(value) and value != AUTO_KEYWORD
+      return value.to_i
+    end
+
+    def get_position(value)
+      raise InvalidSubtitle, "VTT Position should be a valid number" if !is_integer?(value)
+      raise InvalidSubtitle, "VTT Position should be a number between 0 to 100" if (value.to_i < 0) or (value.to_i > 100)
+      return value.to_i
+    end
+
+    def is_integer?(val)
+      val.to_i.to_s == val
+    end
   end
 end
