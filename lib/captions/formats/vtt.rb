@@ -12,11 +12,11 @@ module Captions
 
     # Alignment Data
     ALIGNMENT_VALUES = {
-      "middle" => "center",
+      "middle" => "middle",
       "left"   => "left",
       "right"  => "right",
-      "start"  => "left",
-      "end"    => "right",
+      "start"  => "start",
+      "end"    => "end",
     }
 
     # Parse VTT file and update CueList

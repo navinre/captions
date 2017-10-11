@@ -10,7 +10,7 @@ module Captions
     # List of Text Properties
     TEXT_PROPERTIES = [ALIGNMENT, COLOR, POSITION]
 
-    attr_accessor :number, :start_time, :end_time, :duration, :text, :property
+    attr_accessor :number, :start_time, :end_time, :duration, :text, :properties
 
     # Creates a new Cue class
     # Each cue denotes a subtitle.
@@ -20,7 +20,7 @@ module Captions
       self.end_time = nil
       self.duration = nil
       self.number = nil
-      self.property = {}
+      self.properties = {}
     end
 
     # Sets the time for the cue. Both start-time and
@@ -34,17 +34,17 @@ module Captions
 
     # Getter and Setter methods for Text Properties
     # These are pre-defined properties. This is just to assign
-    # or access the property of that text.
+    # or access the properties of that text.
     TEXT_PROPERTIES.each do |setting|
       define_method :"#{setting}" do
-        if self.property[setting].present?
-          return self.property[setting]
+        if self.properties[setting].present?
+          return self.properties[setting]
         end
         return nil
       end
 
       define_method :"#{setting}=" do |value|
-        self.property[setting] = value
+        self.properties[setting] = value
       end
     end
 
