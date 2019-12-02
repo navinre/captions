@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Subtitle Editor and Converter written in Ruby}
   spec.description   = %q{Subtitle Editor and Converter written in Ruby. Captions can read/modify/export subtitles from one format to another }
-  spec.homepage      = "https://github.com/navinre/captions"
+  spec.homepage      = "https://github.com/sahroshan/captions"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
