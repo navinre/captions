@@ -6,8 +6,8 @@ require 'captions/version'
 Gem::Specification.new do |spec|
   spec.name          = "captions"
   spec.version       = Captions::VERSION
-  spec.authors       = ["navin"]
-  spec.email         = ["navin@amagi.com"]
+  spec.authors       = ["sahroshan"]
+  spec.email         = ["sahroshan@amagi.com"]
 
   spec.summary       = %q{Subtitle Editor and Converter written in Ruby}
   spec.description   = %q{Subtitle Editor and Converter written in Ruby. Captions can read/modify/export subtitles from one format to another }
