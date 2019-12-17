@@ -14,12 +14,12 @@ module Captions
 
     # Creates a new Cue class
     # Each cue denotes a subtitle.
-    def initialize
+    def initialize(cue_number = nil)
       self.text = nil
       self.start_time = nil
       self.end_time = nil
       self.duration = nil
-      self.number = nil
+      self.number = cue_number
       self.properties = {}
     end
 
