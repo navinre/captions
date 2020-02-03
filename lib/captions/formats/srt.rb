@@ -3,34 +3,40 @@ module Captions
 
     def parse
       base_parser do
-        count = 1
-        cue = Cue.new
-        number = nil
-        lines = []
-        while(line = @file.gets) do
-          line = line.strip
-          if line.empty?
-            @cue_list.append(cue) if cue and cue.start_time
-            cue = Cue.new
-            # This is done to handle white spaces at the beginning
-            # and end of the file
-            if(number = @file.gets)
-              # Reads the number immediately followed by white-space
-              cue.number = number.to_i
-            else
-              cue = nil
-            end
-          elsif is_time?(line)
-            s , e = get_time(line)
-            cue.set_time(s, e)
-          elsif is_text?(line)
-            cue.add_text(line)
-          elsif !line.empty?
-            raise MalformedString, "Invalid format at line #{count}"
-          end
+        count = 0
+        state = :new_cue
+        cue = nil
+        loop do
           count += 1
+          line = @file.gets
+          break if line.nil? ## End of file
+          line.strip!
+          case state
+          when :new_cue
+            next if line.empty?  ## just another blank line, remain in new_cue state
+            begin
+              cue = Cue.new(Integer(line))
+            rescue ArgumentError
+              raise InvalidSubtitle, "Invalid Cue Number at line #{count}"
+            end
+            state = :time
+          when :time
+            raise InvalidSubtitle, "Invalid Time Format at line #{count}" unless is_time?(line)
+            start_time, end_time = get_time(line)
+            cue.set_time(start_time, end_time)
+            state = :text
+          when :text
+            if line.empty?
+              ## end of previous cue
+              @cue_list.append(cue) if cue && cue.start_time
+              cue = nil
+              state = :new_cue
+            else
+              cue.add_text(line)
+            end
+          end
         end
-        @cue_list.append(cue) if cue
+        @cue_list.append(cue) if cue && cue.start_time
       end
     end
 
