@@ -13,6 +13,7 @@ module Captions
     # Alignment Data
     ALIGNMENT_VALUES = {
       "middle" => "middle",
+      "center" => "middle",
       "left"   => "left",
       "right"  => "right",
       "start"  => "start",
