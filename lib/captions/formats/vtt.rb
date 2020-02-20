@@ -7,6 +7,9 @@ module Captions
     # VTT file comments/style section
     VTT_METADATA = /^NOTE|^STYLE/
 
+    # The identifier is a name that identifies the cue.
+    CUE_IDENTIFIER = /^\d+((?!-->).)*$/
+
     # Auto Keyword used in Alignment
     AUTO_KEYWORD = "auto"
 
@@ -23,7 +26,6 @@ module Captions
     # Parse VTT file and update CueList
     def parse
       base_parser do
-        count = 1
         cue_count = 0
         meta_data_section = false
         cue = nil
@@ -32,6 +34,8 @@ module Captions
           line = line.strip
           if line.empty?
             meta_data_section = false
+          elsif !meta_data_section and is_cue_identifier?(line)
+            next
           elsif is_meta_data?(line)
             meta_data_section = true
           elsif is_time?(line)
@@ -83,6 +87,10 @@ module Captions
     # Check whether if its subtilte text or not
     def is_text?(text)
       !text.empty? and text.is_a?(String) and text != VTT_HEADER
+    end
+
+    def is_cue_identifier?(text)
+      text.match?(CUE_IDENTIFIER)
     end
 
     def set_properties(cue, properties)
