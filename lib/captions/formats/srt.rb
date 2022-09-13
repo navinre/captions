@@ -10,9 +10,10 @@ module Captions
           count += 1
           line = @file.gets
           break if line.nil? ## End of file
-          line.strip!
+          line.chomp!
           case state
           when :new_cue
+            line.strip!
             next if line.empty?  ## just another blank line, remain in new_cue state
             begin
               cue = Cue.new(Integer(line))
@@ -21,6 +22,7 @@ module Captions
             end
             state = :time
           when :time
+            line.strip!
             raise InvalidSubtitle, "Invalid Time Format at line #{count}" unless is_time?(line)
             start_time, end_time = get_time(line)
             cue.set_time(start_time, end_time)
@@ -32,6 +34,7 @@ module Captions
               cue = nil
               state = :new_cue
             else
+              line.strip!
               cue.add_text(line)
             end
           end
